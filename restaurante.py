@@ -14,7 +14,6 @@ class CalculadorCosto:
                    for item in pedido.items)
 
 # Principio 2: Abierto/Cerrado (OCP)
-
 # 1. Crear interfaz/clase abstracta base
 class IGeneradorRecibo(ABC):
     @abstractmethod
@@ -31,6 +30,9 @@ class GeneradorReciboTexto(IGeneradorRecibo):
 
 
 # Principio 3: Sustitución de Liskov (LSP)
+
+# Principio 4: Segregación de Interfaces (ISP)
+# Las interfaces ya están divididas (ProcesadorPago no obliga a implementar otras funciones irrelevantes).
 class ProcesadorPago(ABC):
     @abstractmethod
     def procesar_pago(self, monto):
@@ -48,8 +50,6 @@ class PagoPayPal(ProcesadorPago):
     def procesar_pago(self, monto):
         print(f"Procesando pago de ${monto} a través de PayPal.")
 
-# Principio 4: Segregación de Interfaces (ISP)
-# Las interfaces ya están divididas (ProcesadorPago no obliga a implementar otras funciones irrelevantes).
 
 # Principio 5: Inversión de Dependencias (DIP)
 class SistemaRestaurante:
