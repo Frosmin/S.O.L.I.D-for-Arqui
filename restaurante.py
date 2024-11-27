@@ -10,16 +10,25 @@ class Pedido:
 
 class CalculadorCosto:
     def calcular_total(self, pedido):
-        return sum(item["precio"] * item["cantidad"] for item in pedido.items)
+        return sum(item["precio"] * item["cantidad"] 
+                   for item in pedido.items)
 
 # Principio 2: Abierto/Cerrado (OCP)
-class GeneradorRecibo:
+
+# 1. Crear interfaz/clase abstracta base
+class IGeneradorRecibo(ABC):
+    @abstractmethod
+    def generar_recibo(self, pedido, total):
+        pass
+
+class GeneradorReciboTexto(IGeneradorRecibo):
     def generar_recibo(self, pedido, total):
         recibo = "Recibo:\n"
         for item in pedido.items:
-            recibo += f'{item["cantidad"]}x {item["nombre"]} - ${item["precio"] * item["cantidad"]}\n'
-        recibo += f"Total: ${total}\n"
+            recibo = recibo + f'{item["cantidad"]}x {item["nombre"]} - ${item["precio"] * item["cantidad"]}\n'
+        recibo = recibo + f"Total: ${total}\n"
         return recibo
+
 
 # Principio 3: Sustitución de Liskov (LSP)
 class ProcesadorPago(ABC):
@@ -53,18 +62,20 @@ class SistemaRestaurante:
         print(recibo)
         self.procesador_pago.procesar_pago(total)
 
+
 # Ejemplo de uso
 if __name__ == "__main__":
-    # Crear pedido
-    pedido = Pedido()
-    pedido.agregar_item("Hamburguesa", 8.5, 2)
-    pedido.agregar_item("Refresco", 2.0, 2)
-
-    # Crear dependencias
     calculador_costo = CalculadorCosto()
-    generador_recibo = GeneradorRecibo()
-    procesador_pago = PagoTarjeta()  # Cambiar a PagoEfectivo o PagoPayPal según sea necesario
-
-    # Crear sistema de restaurante
+    generador_recibo = GeneradorReciboTexto()
+    procesador_pago = PagoEfectivo()
     sistema = SistemaRestaurante(procesador_pago)
-    sistema.realizar_pedido(pedido, generador_recibo, calculador_costo)
+
+    
+    pedido1 = Pedido()
+    pedido1.agregar_item("pollo", 20, 2)
+    pedido1.agregar_item("jugo", 6, 1)
+    
+    
+    
+    sistema.realizar_pedido(pedido1, generador_recibo, calculador_costo)
+   
