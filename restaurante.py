@@ -27,6 +27,15 @@ class GeneradorReciboTexto(IGeneradorRecibo):
             recibo = recibo + f'{item["cantidad"]}x {item["nombre"]} - ${item["precio"] * item["cantidad"]}\n'
         recibo = recibo + f"Total: ${total}\n"
         return recibo
+    
+class GeneradorReciboHTML(IGeneradorRecibo):
+    def generar_recibo(self, pedido, total):
+        recibo = "<h1>Recibo:</h1>"
+        recibo = recibo + "<ul>"
+        for item in pedido.items:
+            recibo = recibo + f'<li>{item["cantidad"]}x {item["nombre"]} - ${item["precio"] * item["cantidad"]}</li>'
+        recibo = recibo + f"</ul><p>Total: ${total}</p>"
+        return recibo
 
 
 # Principio 3: Sustitución de Liskov (LSP)
