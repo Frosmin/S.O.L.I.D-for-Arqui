@@ -39,9 +39,8 @@ class GeneradorReciboHTML(IGeneradorRecibo):
 
 
 # Principio 3: Sustitución de Liskov (LSP)
-
 # Principio 4: Segregación de Interfaces (ISP)
-# Las interfaces ya están divididas (ProcesadorPago no obliga a implementar otras funciones irrelevantes).
+#Abierto/Cerrado (OCP)
 class ProcesadorPago(ABC):
     @abstractmethod
     def procesar_pago(self, monto):
