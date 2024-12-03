@@ -75,7 +75,7 @@ class SistemaRestaurante:
 if __name__ == "__main__":
     calculador_costo = CalculadorCosto()
     generador_recibo = GeneradorReciboTexto()
-    procesador_pago = PagoEfectivo()
+    procesador_pago = PagoPayPal()
     sistema = SistemaRestaurante(procesador_pago)
 
     
